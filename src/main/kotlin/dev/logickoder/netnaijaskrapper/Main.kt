@@ -1,3 +1,5 @@
+package dev.logickoder.netnaijaskrapper
+
 fun main(args: Array<String>) {
     println("Hello World!")
 
