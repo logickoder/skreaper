@@ -1,13 +1,10 @@
-package dev.logickoder.skreaper.netnaija
+package dev.logickoder.skreaper
 
 import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor
 import com.gargoylesoftware.htmlunit.html.HtmlHeading1
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.html.HtmlSpan
-import dev.logickoder.skreaper.Episode
-import dev.logickoder.skreaper.Season
-import dev.logickoder.skreaper.Skrapper
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*

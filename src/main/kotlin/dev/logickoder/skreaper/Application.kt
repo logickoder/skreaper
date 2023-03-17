@@ -1,7 +1,11 @@
 package dev.logickoder.skreaper
 
-import dev.logickoder.skreaper.netnaija.Netnaija
-
 suspend fun main() {
-    println(Netnaija().scrape("https://www.thenetnaija.net/videos/series/10426-the-mandalorian"))
+    val link = readln()
+    val scrapper = when {
+        link.contains("netnaija", true) -> Netnaija()
+        link.contains("waploaded", true) -> Waploaded()
+        else -> null
+    }
+    println(scrapper?.scrape("https://series.waploaded.com/series/441686/shadow-and-bone"))
 }
