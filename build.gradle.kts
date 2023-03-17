@@ -39,5 +39,5 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    mainClass.set("dev.logickoder.netnaijaskrapper.ApplicationKt")
+    mainClass.set("dev.logickoder.skreaper.ApplicationKt")
 }

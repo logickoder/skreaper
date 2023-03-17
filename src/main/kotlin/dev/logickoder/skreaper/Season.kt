@@ -1,4 +1,4 @@
-package dev.logickoder.seriesskrapper
+package dev.logickoder.skreaper
 
 data class Season(
     val name: String = "",
