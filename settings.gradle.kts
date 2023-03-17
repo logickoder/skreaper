@@ -1,3 +1,2 @@
-
-rootProject.name = "netnaija-skrapper"
+rootProject.name = "series-skrapper"
 

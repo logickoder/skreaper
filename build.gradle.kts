@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.8.10"
+    kotlin("plugin.serialization") version "1.8.10"
     application
 }
 
@@ -10,10 +11,15 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven { url  = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 }
 
 dependencies {
-    implementation("it.skrape:skrapeit:1.2.2")
+    val ktorVersion = "2.2.4"
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("net.sourceforge.htmlunit:htmlunit:2.71.0-SNAPSHOT")
     testImplementation(kotlin("test"))
 }
 
@@ -33,5 +39,5 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    mainClass.set("dev.logickoder.netnaijaskrapper.MainKt")
+    mainClass.set("dev.logickoder.netnaijaskrapper.ApplicationKt")
 }
