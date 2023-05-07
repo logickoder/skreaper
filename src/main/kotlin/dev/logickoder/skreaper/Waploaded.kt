@@ -9,7 +9,7 @@ class Waploaded : Skrapper {
 
     private val baseUrl = "https://series.waploaded.com/"
 
-    override suspend fun scrape(url: String): List<Season> {
+    override suspend fun scrape(url: String, range: IntRange): List<Season> {
         val webClient = WebClient().apply {
             options.isThrowExceptionOnScriptError = false
             options.isJavaScriptEnabled = false
@@ -26,6 +26,8 @@ class Waploaded : Skrapper {
         val seasons = page.retrieveLinks().let {
             println("Found ${it.size} seasons, extracting them")
             it
+        }.filter { node ->
+            node.title().seasonFromString() in range
         }.map { node ->
             val seasonName = node.title()
             val seasonUrl = baseUrl + node.hrefAttribute

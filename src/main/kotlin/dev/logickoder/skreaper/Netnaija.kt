@@ -17,7 +17,7 @@ import kotlinx.serialization.json.jsonPrimitive
 
 class Netnaija : Skrapper {
 
-    override suspend fun scrape(url: String): List<Season> {
+    override suspend fun scrape(url: String, range: IntRange): List<Season> {
         val webClient = WebClient().apply {
             options.isThrowExceptionOnScriptError = false
             options.isJavaScriptEnabled = false
@@ -36,6 +36,8 @@ class Netnaija : Skrapper {
         }.let {
             println("Found ${it.size} seasons, extracting them")
             it
+        }.filter { node ->
+            node.textContent.seasonFromString() in range
         }.map { node ->
             val seasonName = node.textContent
             val seasonUrl = node.hrefAttribute
