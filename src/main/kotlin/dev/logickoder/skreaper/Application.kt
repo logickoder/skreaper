@@ -1,21 +1,26 @@
 package dev.logickoder.skreaper
 
+import kotlinx.coroutines.runBlocking
+
 /**
  * Entry point to the scrapper cmd application.
  */
-suspend fun main() {
+fun main() = runBlocking {
     while (true) {
         print("Enter the link to the series you want to fetch: ")
         val link = readln()
 
         // Determine the appropriate scrapper based on the provided link.
         val scrapper = when {
-            link.contains("netnaija", true) -> Netnaija()
-            link.contains("waploaded", true) -> Waploaded()
+            link.contains("netnaija", true) -> Netnaija
+            link.contains("waploaded", true) -> Waploaded
             // Exit the loop if the link is blank.
             link.isBlank() -> break
-            // No suitable scrapper found for the provided link.
-            else -> null
+            // Skip this loop if no suitable scrapper is found for the provided link.
+            else -> {
+                println("No suitable scrapper found for the provided link\n")
+                continue
+            }
         }
 
         print("Enter the season to start scrapping from (Optional): ")
@@ -25,7 +30,7 @@ suspend fun main() {
         val end = readlnOrNull()?.toIntOrNull() ?: Integer.MAX_VALUE
 
         // Scrape the series episodes using the selected scrapper within the specified range of seasons.
-        scrapper?.scrape(link, start..end)?.forEach { season ->
+        scrapper.scrape(link, start..end).forEach { season ->
             // Print the season name.
             println(season.name)
 
