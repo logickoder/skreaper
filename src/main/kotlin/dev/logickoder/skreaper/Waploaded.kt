@@ -4,7 +4,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor
 import com.gargoylesoftware.htmlunit.html.HtmlHeading1
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 
-class Waploaded : Scrapper() {
+object Waploaded : Scrapper() {
 
     private val baseUrl = "https://series.waploaded.com/"
 

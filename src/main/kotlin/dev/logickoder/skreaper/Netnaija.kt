@@ -14,7 +14,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-class Netnaija : Scrapper() {
+object Netnaija : Scrapper() {
 
     override fun HtmlPage.getSeriesName(): String = querySelector<HtmlHeading1>("h1.page-h1").textContent
 
