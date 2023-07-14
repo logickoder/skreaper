@@ -6,7 +6,7 @@ import org.htmlunit.html.HtmlPage
 
 object Waploaded : Scrapper() {
 
-    private val baseUrl = "https://series.waploaded.com/"
+    private const val baseUrl = "https://series.waploaded.com/"
 
     override fun HtmlPage.getSeriesName(): String = querySelector<HtmlHeading1>("h1.post_title").textContent
 
@@ -27,9 +27,13 @@ object Waploaded : Scrapper() {
         return webClient.getPage<HtmlPage>(seasonUrl).getSeasonLinks().map { node ->
             val episodeLink = baseUrl + node.hrefAttribute
 
-            val episodeDownloadLink = webClient.getPage<HtmlPage>(episodeLink).querySelectorAll(
+            // open the episode page
+            val episodePage = webClient.getPage<HtmlPage>(episodeLink)
+
+            // find the download button on the page
+            val episodeDownloadLink = episodePage.querySelectorAll(
                 "div.main_content div.file_attachment_wrapper a.button"
-            )[1] as HtmlAnchor
+            ).first() as HtmlAnchor
 
             // click on the episode download link
             val episodeDownloadLinkAnchor = episodeDownloadLink.click<HtmlPage>().querySelector<HtmlAnchor>(
