@@ -1,8 +1,8 @@
 package dev.logickoder.skreaper
 
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor
-import com.gargoylesoftware.htmlunit.html.HtmlHeading1
-import com.gargoylesoftware.htmlunit.html.HtmlPage
+import org.htmlunit.html.HtmlAnchor
+import org.htmlunit.html.HtmlHeading1
+import org.htmlunit.html.HtmlPage
 
 object Waploaded : Scrapper() {
 

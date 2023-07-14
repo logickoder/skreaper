@@ -1,9 +1,5 @@
 package dev.logickoder.skreaper
 
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor
-import com.gargoylesoftware.htmlunit.html.HtmlHeading1
-import com.gargoylesoftware.htmlunit.html.HtmlPage
-import com.gargoylesoftware.htmlunit.html.HtmlSpan
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
@@ -13,6 +9,10 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import org.htmlunit.html.HtmlAnchor
+import org.htmlunit.html.HtmlHeading1
+import org.htmlunit.html.HtmlPage
+import org.htmlunit.html.HtmlSpan
 
 object Netnaija : Scrapper() {
 
