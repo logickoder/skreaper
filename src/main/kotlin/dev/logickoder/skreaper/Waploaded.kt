@@ -6,7 +6,7 @@ import org.htmlunit.html.HtmlPage
 
 object Waploaded : Scrapper() {
 
-    private val baseUrl = "https://series.waploaded.com/"
+    private const val baseUrl = "https://series.waploaded.com/"
 
     override fun HtmlPage.getSeriesName(): String = querySelector<HtmlHeading1>("h1.post_title").textContent
 
@@ -27,21 +27,35 @@ object Waploaded : Scrapper() {
         return webClient.getPage<HtmlPage>(seasonUrl).getSeasonLinks().map { node ->
             val episodeLink = baseUrl + node.hrefAttribute
 
-            val episodeDownloadLink = webClient.getPage<HtmlPage>(episodeLink).querySelectorAll(
-                "div.main_content div.file_attachment_wrapper a.button"
-            )[1] as HtmlAnchor
+            // open the episode page
+            val episodePage = webClient.getPage<HtmlPage>(episodeLink)
 
-            // click on the episode download link
-            val episodeDownloadLinkAnchor = episodeDownloadLink.click<HtmlPage>().querySelector<HtmlAnchor>(
-                "a.dl_link"
+            // get all download buttons from page
+            val downloadButtons = episodePage.querySelectorAll(
+                "div.main_content div.file_attachment_wrapper a.button"
             )
 
-            // retrieve the video link from the anchor after splitting it via '='
-            val splits = episodeDownloadLinkAnchor.getAttribute("onClick").split("=")
-            val videoUrl = when {
-                splits.size > 1 -> splits[1]
-                else -> splits[0]
-            }.replace("'", "")
+            val videoUrl = try {
+                // find the download button on the page
+                val episodeDownloadLink = downloadButtons.first() as HtmlAnchor
+
+                // click on the episode download link
+                val episodeDownloadLinkAnchor = episodeDownloadLink.click<HtmlPage>().querySelector<HtmlAnchor>(
+                    "a.dl_link"
+                )
+
+                // retrieve the video link from the anchor after splitting it via '='
+                val splits = episodeDownloadLinkAnchor.getAttribute("onClick").split("=")
+
+                when {
+                    splits.size > 1 -> splits[1]
+                    else -> splits[0]
+                }.replace("'", "")
+            } catch (e: Exception) {
+                println("Failed to get video url for $episodeLink")
+                e.printStackTrace()
+                ""
+            }
 
             Episode(
                 name = node.title(),
